@@ -4,7 +4,7 @@ import random
 
 win = Tk()                          #creates the window
 win.title('ATM')
-win.geometry('400x400')             #sets the dimension of the window
+win.geometry('400x390')             #sets the dimension of the window
 
 tim40 = font.Font(family='Times', size=40, weight='bold', slant='italic', underline=1)            #Font is an instance which contains parameter as
                                                                                                   #family(the font style), size, weight(bold,normal)
@@ -17,9 +17,17 @@ title_label.pack(pady=10)                                               #pady gi
 #displaying some introduction
 user_id = random.randrange(1000,10000)
 cour20 = font.Font(family='Courier', size=20, weight='bold')
-intro = Label(win, text='\nWelcome User'+str(user_id), font=cour20, fg='green')
+intro = Label(win, text='\nWelcome User '+str(user_id), font=cour20, fg='green')
 intro.pack()
 cour15 = font.Font(family='Courier', size=15, weight='bold')
 option_label = Label(win, text='\nSelect your account type', font=cour15, fg='grey')
 option_label.pack()
+
+rightframe = Frame(win)
+rightframe.pack(side=RIGHT)
+saving = Button(rightframe,text='Savings',font=cour15,bg='skyblue',fg='red')
+saving.pack(padx=10,pady=10)
+current = Button(rightframe,text="Current",font=cour15,bg='skyblue',fg='red')
+current.pack(padx=10,pady=10)
+
 win.mainloop()
