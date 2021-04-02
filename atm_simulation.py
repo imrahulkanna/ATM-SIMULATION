@@ -6,9 +6,43 @@ win = Tk()                          #creates the window
 win.title('ATM')
 win.geometry('400x390')             #sets the dimension of the window
 
+tim40 = font.Font(family='Times', size=40, weight='bold', slant='italic', underline=1)      #Font is an instance which contains parameter as
+                                                                                            #family(the font style), size, weight(bold,normal)
+                                                                                            #slant(italic,roman(non-italic)), underline(1-yes,0-no),
+                                                                                            #overstrike(1-yes,0-no) and many more
+cour20 = font.Font(family='Courier', size=20, weight='bold')
+cour15 = font.Font(family='Courier', size=15, weight='bold')
 
+
+#options window
+def option_func():
+
+    option_win = Toplevel(win)
+    option_win.geometry('400x390')
+
+    text_title = Label(option_win, text='\nATM', font=tim40)
+    text_title.pack()
+
+    rf = Frame(option_win)          #right frame
+    rf.pack(side=RIGHT)
+
+    lf = Frame(option_win)          #left frame
+    lf.pack(side=LEFT)
+
+    withdrawal_btn = Button(rf, text=' WITHDRAWAL ', font=cour15, fg='blue')
+    withdrawal_btn.pack(padx=10, pady=10)
+
+    balance_btn = Button(rf, text='BALANCE INQ', font=cour15)
+    balance_btn.pack(pady=10, padx=10)
+
+    change_pin_btn = Button(lf, text='CHANGE PIN', font=cour15)
+    change_pin_btn.pack(padx=10, pady =10)
+
+    exit_btn = Button(lf, text='   EXIT   ', font=cour15, fg='red', command=lambda: option_win.destroy())
+    exit_btn.pack(padx=10,pady=10)
+
+#enter_pin function
 def enter_pin():
-
     new_win = Toplevel(win)
     new_win.geometry('400x390')
 
@@ -83,7 +117,7 @@ def enter_pin():
     btn_ = Button(bf1, text=' ', font=cour15)
     btn_.pack(side=LEFT)
 
-    enter_btn = Button(bf0, text='ENTER', font=cour15,fg='green')
+    enter_btn = Button(bf0, text='ENTER', font=cour15,fg='green', command=option_func)
     enter_btn.pack(side= LEFT, pady=10,padx=10)
 
     exit_btn = Button(bf0, text='EXIT', font=cour15, fg='red', command=lambda:new_win.destroy())
@@ -97,28 +131,21 @@ def enter_pin():
 
 
 
-tim40 = font.Font(family='Times', size=40, weight='bold', slant='italic', underline=1)      #Font is an instance which contains parameter as
-                                                                                            #family(the font style), size, weight(bold,normal)
-                                                                                            #slant(italic,roman(non-italic)), underline(1-yes,0-no),
-                                                                                            #overstrike(1-yes,0-no) and many more
-
 title_label = Label(win, text='ATM', font=tim40, fg='red')              #Label is smthg similar to a label which displays text on the window
 title_label.pack(pady=10)                                               #pady gives vertical distance both above and below where as padx gives
-                                                                        #horizontal distance
+
 #displaying some introduction
 user_id = random.randrange(1000,10000)
-cour20 = font.Font(family='Courier', size=20, weight='bold')
 intro = Label(win, text='\nWelcome User '+str(user_id), font=cour20, fg='green')
 intro.pack()
-cour15 = font.Font(family='Courier', size=15, weight='bold')
 option_label = Label(win, text='\nSelect your account type', font=cour15, fg='grey')
 option_label.pack()
 
 rightframe = Frame(win)
 rightframe.pack(side=RIGHT)
-saving = Button(rightframe,text='Savings',font=cour15,bg='skyblue',fg='red', command=enter_pin)
-saving.pack(padx=10,pady=10)
-current = Button(rightframe,text="Current",font=cour15,bg='skyblue',fg='red', command=enter_pin)
-current.pack(padx=10,pady=10)
+saving = Button(rightframe, text='Savings', font=cour15, bg='skyblue', fg='red', command=enter_pin)
+saving.pack(padx=10, pady=10)
+current = Button(rightframe, text="Current", font=cour15, bg='skyblue', fg='red', command=enter_pin)
+current.pack(padx=10, pady=10)
 
 win.mainloop()
