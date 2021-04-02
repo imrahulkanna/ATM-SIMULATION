@@ -1,5 +1,6 @@
 from tkinter import *
 import tkinter.font as font         #imports font module and being imported as font. It helps to define a specfic font style
+from tkinter import  messagebox
 import random
 
 win = Tk()                          #creates the window
@@ -14,11 +15,24 @@ cour20 = font.Font(family='Courier', size=20, weight='bold')
 cour15 = font.Font(family='Courier', size=15, weight='bold')
 
 
+#balance_enquire window
+def balance_func():
+    balance_win = Toplevel(win)
+    balance_win.geometry('420x390')
+    balance_win.grab_set()
+    balance = random.randrange(1000,1000000)
+    message = Message(balance_win,text='\n\nYour transaction is successful\n\nAvailable Balance: '+str(balance)+'\n\nThank you for using our', font=cour20, fg='green')
+    message.pack()
+    text = Label(balance_win, text='ATM', font=tim40, fg='red')
+    text.pack()
+
+
 #options window
 def option_func():
 
     option_win = Toplevel(win)
     option_win.geometry('400x390')
+    option_win.grab_set()
 
     text_title = Label(option_win, text='\nATM', font=tim40)
     text_title.pack()
@@ -32,7 +46,7 @@ def option_func():
     withdrawal_btn = Button(rf, text=' WITHDRAWAL ', font=cour15, fg='blue')
     withdrawal_btn.pack(padx=10, pady=10)
 
-    balance_btn = Button(rf, text='BALANCE INQ', font=cour15)
+    balance_btn = Button(rf, text='BALANCE INQ', font=cour15, command=balance_func)
     balance_btn.pack(pady=10, padx=10)
 
     change_pin_btn = Button(lf, text='CHANGE PIN', font=cour15)
@@ -41,12 +55,12 @@ def option_func():
     exit_btn = Button(lf, text='   EXIT   ', font=cour15, fg='red', command=lambda: option_win.destroy())
     exit_btn.pack(padx=10,pady=10)
 
-#enter_pin function
+#enter_pin window
 def enter_pin():
     new_win = Toplevel(win)
     new_win.geometry('400x390')
+    new_win.grab_set()
 
-    text_entry = StringVar()
 
     def setInputText(text):
         entry_box.insert('end',text)            #insert allows to enter(display on entry box) the text at the end(if we replace end with 0 the text is placed at front)
@@ -123,14 +137,14 @@ def enter_pin():
     exit_btn = Button(bf0, text='EXIT', font=cour15, fg='red', command=lambda:new_win.destroy())
     exit_btn.pack(side=RIGHT, padx=10)
 
-    clear_btn = Button(bf0,text='CLEAR', font=cour15, fg='orange',command=text_delete)
+    clear_btn = Button(bf0,text='CLEAR', font=cour15, fg='orange', command=text_delete)
     clear_btn.pack(side=LEFT)
 
     note = Label(bf, text='Note:Enter pin either from keyboard or keypad', fg='red')
     note.pack()
 
 
-
+#main opening window
 title_label = Label(win, text='ATM', font=tim40, fg='red')              #Label is smthg similar to a label which displays text on the window
 title_label.pack(pady=10)                                               #pady gives vertical distance both above and below where as padx gives
 
