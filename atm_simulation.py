@@ -1,6 +1,5 @@
 from tkinter import *
-import tkinter.font as font         #imports font module and being imported as font. It helps to define a specfic font style
-from tkinter import  messagebox
+import tkinter.font as font         #imports font module and being imported as font. It helps to define a specific font style
 import random
 
 win = Tk()                          #creates the window
@@ -17,6 +16,7 @@ cour15 = font.Font(family='Courier', size=15, weight='bold')
 
 #balance_enquire window
 def balance_func():
+    option_func.option_win.withdraw()
     balance_win = Toplevel(win)
     balance_win.geometry('420x390')
     balance_win.grab_set()
@@ -29,18 +29,18 @@ def balance_func():
 
 #options window
 def option_func():
+    enter_pin.new_win.withdraw()                # check enter_pin() function for the functionality of .withdraw()
+    option_func.option_win = Toplevel(win)
+    option_func.option_win.geometry('400x390')
+   # option_win.grab_set()                       ## check enter_pin() function for the functionality of .grab_set()
 
-    option_win = Toplevel(win)
-    option_win.geometry('400x390')
-    option_win.grab_set()
-
-    text_title = Label(option_win, text='\nATM', font=tim40)
+    text_title = Label(option_func.option_win, text='\nATM', font=tim40)
     text_title.pack()
 
-    rf = Frame(option_win)          #right frame
+    rf = Frame(option_func.option_win)          #right frame
     rf.pack(side=RIGHT)
 
-    lf = Frame(option_win)          #left frame
+    lf = Frame(option_func.option_win)          #left frame
     lf.pack(side=LEFT)
 
     withdrawal_btn = Button(rf, text=' WITHDRAWAL ', font=cour15, fg='blue')
@@ -52,14 +52,18 @@ def option_func():
     change_pin_btn = Button(lf, text='CHANGE PIN', font=cour15)
     change_pin_btn.pack(padx=10, pady =10)
 
-    exit_btn = Button(lf, text='   EXIT   ', font=cour15, fg='red', command=lambda: option_win.destroy())
-    exit_btn.pack(padx=10,pady=10)
+    exit_btn = Button(lf, text='   EXIT   ', font=cour15, fg='red', command=lambda: [option_func.option_win.destroy(), enter_pin.new_win.deiconify()])
+    exit_btn.pack(padx=10,pady=10)                                                                         # check enter_pin() function for the functionality of .deiconify()
 
 #enter_pin window
 def enter_pin():
-    new_win = Toplevel(win)
-    new_win.geometry('400x390')
-    new_win.grab_set()
+
+    win.withdraw()                              # .withdraw() hides or make the associated window invisible until (.deiconify()) appears
+
+    enter_pin.new_win = Toplevel(win)           # enter_pin.new_win makes the variable new_win as the member of the function object
+    enter_pin.new_win.geometry('400x390')       # this helps us to use the variable even outside the function
+
+    #enter_pin.new_win.grab_set()               ## .grab.set() makes the associated window inactive temporarily until the active window is working
 
 
     def setInputText(text):
@@ -68,31 +72,31 @@ def enter_pin():
     def text_delete():
         entry_box.delete(0)                     #we have another function called delete which deletes text from the given range(.delete(0,'end') deletes the entire text
 
-    lbl = Label(new_win, text='Enter your PIN',font=cour20,fg='red')
+    lbl = Label(enter_pin.new_win, text='Enter your PIN',font=cour20,fg='red')
     lbl.pack(pady=20)
 
-    entry_box = Entry(new_win, font=cour15, show='*', justify='center')  #show parameter display the input text as *(we can use any other element also
+    entry_box = Entry(enter_pin.new_win, font=cour15, show='*', justify='center')  #show parameter display the input text as *(we can use any other element also
     entry_box.pack()
 
-    bf = Frame(new_win)
+    bf = Frame(enter_pin.new_win)
     bf.pack(side=BOTTOM)
 
-    bf0 = Frame(new_win)
+    bf0 = Frame(enter_pin.new_win)
     bf0.pack(side=BOTTOM)
 
-    bf1 = Frame(new_win)
+    bf1 = Frame(enter_pin.new_win)
     bf1.pack(side=BOTTOM)
 
-    bf2 = Frame(new_win)
+    bf2 = Frame(enter_pin.new_win)
     bf2.pack(side=BOTTOM)
 
-    bf3 = Frame(new_win)
+    bf3 = Frame(enter_pin.new_win)
     bf3.pack(side=BOTTOM)
 
-    bf4 = Frame(new_win)
+    bf4 = Frame(enter_pin.new_win)
     bf4.pack(side=BOTTOM)
 
-    rf = Frame(new_win)
+    rf = Frame(enter_pin.new_win)
     rf.pack(side=RIGHT)
 
     btn1 = Button(bf4,text='1',font=cour15, command=lambda:setInputText('1'))
@@ -134,7 +138,7 @@ def enter_pin():
     enter_btn = Button(bf0, text='ENTER', font=cour15,fg='green', command=option_func)
     enter_btn.pack(side= LEFT, pady=10,padx=10)
 
-    exit_btn = Button(bf0, text='EXIT', font=cour15, fg='red', command=lambda:new_win.destroy())
+    exit_btn = Button(bf0, text='EXIT', font=cour15, fg='red', command=lambda:[enter_pin.new_win.destroy(), win.deiconify()])   # .deiconify() makes the associated window visible
     exit_btn.pack(side=RIGHT, padx=10)
 
     clear_btn = Button(bf0,text='CLEAR', font=cour15, fg='orange', command=text_delete)
@@ -145,8 +149,8 @@ def enter_pin():
 
 
 #main opening window
-title_label = Label(win, text='ATM', font=tim40, fg='red')              #Label is smthg similar to a label which displays text on the window
-title_label.pack(pady=10)                                               #pady gives vertical distance both above and below where as padx gives
+title_label = Label(win, text='ATM', font=tim40, fg='red')              #Label is something similar to a label which displays text on the window
+title_label.pack(pady=10)                                               #pady gives vertical distance both above and below where as pad x gives
 
 #displaying some introduction
 user_id = random.randrange(1000,10000)
@@ -155,11 +159,11 @@ intro.pack()
 option_label = Label(win, text='\nSelect your account type', font=cour15, fg='grey')
 option_label.pack()
 
-rightframe = Frame(win)
-rightframe.pack(side=RIGHT)
-saving = Button(rightframe, text='Savings', font=cour15, bg='skyblue', fg='red', command=enter_pin)
+right_frame = Frame(win)
+right_frame.pack(side=RIGHT)
+saving = Button(right_frame, text='Savings', font=cour15, bg='sky blue', fg='red', command=enter_pin)
 saving.pack(padx=10, pady=10)
-current = Button(rightframe, text="Current", font=cour15, bg='skyblue', fg='red', command=enter_pin)
+current = Button(right_frame, text="Current", font=cour15, bg='sky blue', fg='red', command=enter_pin)
 current.pack(padx=10, pady=10)
 
 win.mainloop()
