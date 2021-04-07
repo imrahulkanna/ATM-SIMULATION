@@ -15,40 +15,13 @@ tim40 = font.Font(family='Times', size=40, weight='bold', slant='italic', underl
 cour20 = font.Font(family='Courier', size=20, weight='bold')
 cour15 = font.Font(family='Courier', size=15, weight='bold')
 
-
-# balance_enquire window
-def balance_func():
-    option_func.option_win.withdraw()
-    yes_no_func.yes_no_win.withdraw()
-    balance_win = Toplevel(win)
-    balance_win.geometry('460x390')
-    #balance_win.grab_set()
-    balance = random.randrange(1000,1000000)
-    message = Message(balance_win,text='\nYour transaction is successful\n\nAvailable Balance: '+str(balance)+'\n\nThank you for using our', font=cour20, fg='green')
-    message.pack()
-    text = Label(balance_win, text='ATM', font=tim40, fg='red')
-    text.pack()
-
-    exit_button = Button(balance_win, text='EXIT', font=cour15, fg='red', command=lambda: win.destroy())
-    exit_button.pack(side=BOTTOM, pady=10)
+glob_count = 0
 
 
-def yes_no_func():
-    withdrawal_func.withdrawal_win.withdraw()
-    yes_no_func.yes_no_win = Toplevel(win)
-    yes_no_func.yes_no_win.geometry('460x390')
-    bf = Frame(yes_no_func.yes_no_win)
-    bf.pack(side=BOTTOM)
-    msg_box = Message(yes_no_func.yes_no_win, text='\nYour transaction is successful\n\nPlease collect your money\n\nYou can remove your card\n\nDo you want to check your balance?',font=cour20, fg='green')
-    msg_box.pack()
-    yes_btn = Button(bf, text='YES', font=cour15, fg='green', command=balance_func)
-    yes_btn.pack(side=LEFT, pady=10)
-
-    clear_btn = Button(bf, text='NO', font=cour15, fg='red', command=display_func)
-    clear_btn.pack(side=LEFT, padx=10)
-
+# displays message after selecting no in question_func()
 def display_func():
-    yes_no_func.yes_no_win.withdraw()
+
+    question_func.question_win.withdraw()
     display_win = Toplevel(win)
     display_win.geometry('460x390')
     message = Message(display_win, text='\n\nYour transaction has been successful\n\nThank you for using our', font=cour20, fg='green')
@@ -58,6 +31,30 @@ def display_func():
 
     exit_button = Button(display_win, text='EXIT', font=cour15, fg='red', command=lambda: win.destroy())
     exit_button.pack(side=BOTTOM, pady=10)
+
+
+# window asking whether to show balance or not
+def question_func():
+
+    global glob_count
+    glob_count+=1
+
+    withdrawal_func.withdrawal_win.withdraw()
+    question_func.question_win = Toplevel(win)
+    question_func.question_win.geometry('460x390')
+
+    bf = Frame(question_func.question_win)
+    bf.pack(side=BOTTOM)
+
+    msg_box = Message(question_func.question_win, text='\nYour transaction has been successful\n\nPlease collect your money\n\nYou can remove your card\n\nDo you want to check your balance?', font=cour20, fg='green')
+    msg_box.pack()
+
+    yes_btn = Button(bf, text='YES', font=cour15, fg='green', command=balance_func)
+    yes_btn.pack(side=LEFT, pady=10)
+
+    no_btn = Button(bf, text=' NO ', font=cour15, fg='red', command=display_func)
+    no_btn.pack(pady=10, padx=10)
+
 
 # withdrawing money window
 def withdrawal_func():
@@ -125,11 +122,33 @@ def withdrawal_func():
     btn_ = Button(bf4, text=' ', font=cour15)
     btn_.pack(side=LEFT)
 
-    enter_btn = Button(bf, text='ENTER', font=cour15, fg='green', command=yes_no_func)
+    enter_btn = Button(bf, text='ENTER', font=cour15, fg='green', command=question_func)
     enter_btn.pack(side=LEFT, pady=10)
 
     clear_btn = Button(bf, text='CLEAR', font=cour15, fg='orange', command=lambda: money_entry.delete(1))
     clear_btn.pack(side=LEFT, padx=10)
+
+
+# balance displaying window
+def balance_func():
+
+    global glob_count
+
+    if glob_count == 1:
+        question_func.question_win.withdraw()
+
+    option_func.option_win.withdraw()
+    balance_win = Toplevel(win)
+    balance_win.geometry('460x390')
+    #balance_win.grab_set()
+    balance = random.randrange(1000,1000000)
+    message = Message(balance_win,text='\nYour transaction is successful\n\nAvailable Balance: '+str(balance)+'\n\nThank you for using our', font=cour20, fg='green')
+    message.pack()
+    text = Label(balance_win, text='ATM', font=tim40, fg='red')
+    text.pack()
+
+    exit_button = Button(balance_win, text='EXIT', font=cour15, fg='red', command=lambda: win.destroy())
+    exit_button.pack(side=BOTTOM, pady=10)
 
 
 # displays message after change has been changed
@@ -144,6 +163,7 @@ def message_func():
 
     exit_button = Button(win2, text='EXIT', font=cour15, fg='red', command=lambda: win.destroy())
     exit_button.pack(side=BOTTOM, pady=10)
+
 
 # changing pin function
 def change_pin_func():
@@ -221,7 +241,8 @@ def change_pin_func():
     clear_btn = Button(bf, text='CLEAR', font=cour15, fg='orange', command=lambda: [pin_entry.delete(0), re_entry.delete(0)])
     clear_btn.pack(side=LEFT, padx=10)
 
-#options window
+
+# options window
 def option_func():
     enter_pin.new_win.withdraw()                # check enter_pin() function for the functionality of .withdraw()
     option_func.option_win = Toplevel(win)
@@ -241,15 +262,16 @@ def option_func():
     withdrawal_btn.pack(padx=40, pady=10)
 
     balance_btn = Button(rf, text='BALANCE INQ', font=cour15, command=balance_func)
-    balance_btn.pack(pady=10, padx=40)
+    balance_btn.pack(padx=40, pady=10)
 
     change_pin_btn = Button(lf, text='CHANGE PIN', font=cour15, command=change_pin_func)
-    change_pin_btn.pack(padx=40, pady =10)
+    change_pin_btn.pack(padx=40, pady=10)
 
     exit_btn = Button(lf, text='   EXIT   ', font=cour15, fg='red', command=lambda: [option_func.option_win.destroy(), enter_pin.new_win.deiconify()])
-    exit_btn.pack(padx=40,pady=10)                                                                         # check enter_pin() function for the functionality of .deiconify()
+    exit_btn.pack(padx=40, pady=10)                                                                         # check enter_pin() function for the functionality of .deiconify()
 
-#enter_pin window
+
+# enter_pin window
 def enter_pin():
 
     win.withdraw()                              # .withdraw() hides or make the associated window invisible until (.deiconify()) appears
@@ -342,9 +364,9 @@ def enter_pin():
     note.pack()
 
 
-#main opening window
-title_label = Label(win, text='ATM', font=tim40, fg='red')              #Label is something similar to a label which displays text on the window
-title_label.pack(pady=10)                                               #pady gives vertical distance both above and below where as pad x gives
+# main opening window
+title_label = Label(win, text='ATM', font=tim40, fg='red')              # Label is something similar to a label which displays text on the window
+title_label.pack(pady=10)                                               # pady gives vertical distance both above and below where as pad x gives
 
 #displaying some introduction
 user_id = random.randrange(1000,10000)
