@@ -365,7 +365,7 @@ def enter_pin():
 
 # main opening window
 title_label = Label(win, text='ATM', font=tim40, fg='red')              # Label is something similar to a label which displays text on the window
-title_label.pack(pady=10)                                               # pady gives vertical distance both above and below where as pad x gives
+title_label.pack(pady=10)                                               # pad y gives vertical distance both above and below where as pad x gives
 
 #displaying some introduction
 user_id = random.randrange(1000,10000)
