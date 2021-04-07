@@ -1,21 +1,20 @@
 from tkinter import *
-import tkinter.font as font         #imports font module and being imported as font. It helps to define a specific font style
+import tkinter.font as font         # imports font module and being imported as font. It helps to define a specific font style
 import random
-from tkinter import messagebox
-#import time
 
-win = Tk()                          #creates the window
+
+win = Tk()                          # creates the window
 win.title('ATM')
-win.geometry('460x390')             #sets the dimension of the window
+win.geometry('460x390')             # sets the dimension of the window
 
-tim40 = font.Font(family='Times', size=40, weight='bold', slant='italic', underline=1)      #Font is an instance which contains parameter as
-                                                                                            #family(the font style), size, weight(bold,normal)
-                                                                                            #slant(italic,roman(non-italic)), underline(1-yes,0-no),
-                                                                                            #overstrike(1-yes,0-no) and many more
+tim40 = font.Font(family='Times', size=40, weight='bold', slant='italic', underline=1)      # Font is an instance which contains parameter as
+                                                                                            # family(the font style), size, weight(bold,normal)
+                                                                                            # slant(italic,roman(non-italic)), underline(1-yes,0-no),
+                                                                                            # overstrike(1-yes,0-no) and many more
 cour20 = font.Font(family='Courier', size=20, weight='bold')
 cour15 = font.Font(family='Courier', size=15, weight='bold')
 
-glob_count = 0
+glob_count = 0                      # this is used to access balance_func() after press yes in question_func()
 
 
 # displays message after selecting no in question_func()
@@ -24,7 +23,7 @@ def display_func():
     question_func.question_win.withdraw()
     display_win = Toplevel(win)
     display_win.geometry('460x390')
-    message = Message(display_win, text='\n\nYour transaction has been successful\n\nThank you for using our', font=cour20, fg='green')
+    message = Message(display_win, text='\n\nYour transaction has been successful\n\nThank you for using our', font=cour20, fg='blue')
     message.pack()
     text = Label(display_win, text='ATM', font=tim40, fg='red')
     text.pack()
@@ -46,7 +45,7 @@ def question_func():
     bf = Frame(question_func.question_win)
     bf.pack(side=BOTTOM)
 
-    msg_box = Message(question_func.question_win, text='\nYour transaction has been successful\n\nPlease collect your money\n\nYou can remove your card\n\nDo you want to check your balance?', font=cour20, fg='green')
+    msg_box = Message(question_func.question_win, text='\nYour transaction has been successful\n\nPlease collect your money\n\nYou can remove your card\n\nDo you want to check your balance?', font=cour20, fg='blue')
     msg_box.pack()
 
     yes_btn = Button(bf, text='YES', font=cour15, fg='green', command=balance_func)
@@ -142,7 +141,7 @@ def balance_func():
     balance_win.geometry('460x390')
     #balance_win.grab_set()
     balance = random.randrange(1000,1000000)
-    message = Message(balance_win,text='\nYour transaction is successful\n\nAvailable Balance: '+str(balance)+'\n\nThank you for using our', font=cour20, fg='green')
+    message = Message(balance_win,text='\nYour transaction is successful\n\nAvailable Balance: '+str(balance)+'\n\nThank you for using our', font=cour20, fg='blue')
     message.pack()
     text = Label(balance_win, text='ATM', font=tim40, fg='red')
     text.pack()
@@ -156,7 +155,7 @@ def message_func():
     change_pin_func.change_pin_win.withdraw()
     win2 = Toplevel(win)
     win2.geometry('460x390')
-    message = Message(win2, text='\nYour transaction is successful\n\nYour PIN has been successfully changed\n\nThank you for using our', font=cour20, fg='green')
+    message = Message(win2, text='\nYour transaction is successful\n\nYour PIN has been successfully changed\n\nThank you for using our', font=cour20, fg='blue')
     message.pack()
     text = Label(win2, text='ATM', font=tim40, fg='red')
     text.pack()
@@ -230,7 +229,7 @@ def change_pin_func():
     btn.pack(side=LEFT)
 
     b0 = Button(bf4, text='0', font=cour15, command=lambda: [pin_entry.insert('end','0'), re_entry.insert('end','0')])
-    b0.pack(side=LEFT, padx=10)
+    b0.pack(side=LEFT, padx=10)                         # with help of list we can assign multiple functions for buttons
 
     btn_ = Button(bf4, text=' ', font=cour15)
     btn_.pack(side=LEFT)
@@ -283,15 +282,15 @@ def enter_pin():
 
 
     def setInputText(text):
-        entry_box.insert('end',text)            #insert allows to enter(display on entry box) the text at the end(if we replace end with 0 the text is placed at front)
+        entry_box.insert('end',text)            # insert allows to enter(display on entry box) the text at the end(if we replace end with 0 the text is placed at front)
 
     def text_delete():
-        entry_box.delete(0)                     #we have another function called delete which deletes text from the given range(.delete(0,'end') deletes the entire text
+        entry_box.delete(0)                     # we have another function called delete which deletes text for the given range(.delete(0,'end') deletes the entire text
 
     lbl = Label(enter_pin.new_win, text='Enter your PIN',font=cour20,fg='red')
     lbl.pack(pady=20)
 
-    entry_box = Entry(enter_pin.new_win, font=cour15, show='*', justify='center')  #show parameter display the input text as *(we can use any other element also
+    entry_box = Entry(enter_pin.new_win, font=cour15, show='*', justify='center')  # show parameter display the input text as *(we can use any other element also)
     entry_box.pack()
 
     bf = Frame(enter_pin.new_win)
