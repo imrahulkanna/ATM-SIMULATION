@@ -62,7 +62,7 @@ def withdrawal_func():
     withdrawal_func.withdrawal_win = Toplevel(win)
     withdrawal_func.withdrawal_win.geometry('460x390')
 
-    enter_lbl = Label(withdrawal_func.withdrawal_win, text='\nPlease enter money\n', font=cour20, fg='red')
+    enter_lbl = Label(withdrawal_func.withdrawal_win, text='\nPlease enter amount\n', font=cour20, fg='red')
     enter_lbl.pack()
     money_entry = Entry(withdrawal_func.withdrawal_win, font=cour15, justify='center')
     money_entry.pack()
